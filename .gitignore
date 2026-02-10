@@ -9,6 +9,7 @@ data/
 # Frontend
 dashboard/node_modules/
 dashboard/dist/
+dashboard/release/
 dashboard/.env
 
 # OS

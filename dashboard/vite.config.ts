@@ -3,6 +3,8 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
+  // Relative paths so Electron can load from file://
+  base: "./",
   server: {
     port: 5173,
     proxy: {
@@ -11,5 +13,8 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
+  build: {
+    outDir: "dist",
   },
 });
