@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 280px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #000;
+      color: #ededed;
+      padding: 16px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: #888;
+    }
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+    .dot.off {
+      background: #666;
+    }
+    .section {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .label {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .value {
+      font-size: 13px;
+      color: #ededed;
+      word-break: break-all;
+    }
+    .value.muted {
+      color: #666;
+      font-style: italic;
+    }
+    .toggle-btn {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: #111;
+      color: #ededed;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .toggle-btn:hover {
+      background: #1a1a1a;
+    }
+    .toggle-btn.active {
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span class="title">Minimize Tracker</span>
+    <div class="status">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">Active</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="label">Currently tracking</div>
+    <div class="value" id="currentUrl">-</div>
+  </div>
+
+  <div class="section">
+    <div class="label">Domain</div>
+    <div class="value" id="currentDomain">-</div>
+  </div>
+
+  <button class="toggle-btn active" id="toggleBtn">Pause Tracking</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

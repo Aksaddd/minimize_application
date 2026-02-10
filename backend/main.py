@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from config import API_HOST, API_PORT
 from database import init_db
-from routers import applications, categories, schedules, screen_time, settings
+from routers import applications, browser_activity, categories, schedules, screen_time, settings
 
 
 @asynccontextmanager
@@ -30,7 +30,12 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=[
+        "http://localhost:5199",
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "chrome-extension://*",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -42,6 +47,11 @@ app.include_router(categories.router, prefix="/api/categories", tags=["categorie
 app.include_router(schedules.router, prefix="/api/schedules", tags=["schedules"])
 app.include_router(screen_time.router, prefix="/api/screen-time", tags=["screen-time"])
 app.include_router(settings.router, prefix="/api/settings", tags=["settings"])
+app.include_router(
+    browser_activity.router,
+    prefix="/api/browser-activity",
+    tags=["browser-activity"],
+)
 
 
 @app.get("/api/health")

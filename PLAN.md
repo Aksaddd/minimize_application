@@ -642,7 +642,103 @@ minimize_application/
 
 ---
 
-## 12. Success Metrics
+## 12. Browser Activity Tracking (Chrome Extension)
+
+### Overview
+
+Track full URLs visited in Chrome via a Manifest V3 extension. The extension
+monitors tab activations and URL changes, then POSTs events to the local
+backend API. Since all data stays local, we store full URLs (not just domains)
+for future analysis like per-site time tracking and content categorization.
+
+### Architecture
+
+```
++---------------------------+           +---------------------------+
+|    Chrome Extension        |   HTTP    |    FastAPI Backend         |
+|    (Manifest V3)           | ───────► |    /api/browser-activity   |
+|                            |  POST    |                            |
+|  background.js             |          |  browser_activity.py       |
+|  - chrome.tabs.onActivated |          |  - Store BrowserEvent      |
+|  - chrome.tabs.onUpdated   |          |  - Query by date/domain    |
+|  popup.html/js             |          |                            |
++---------------------------+           +---------------------------+
+                                                    │
+                                                    ▼
+                                        +---------------------------+
+                                        |  SQLite: browser_events   |
+                                        |  - url, domain, title     |
+                                        |  - started_at, ended_at   |
+                                        |  - duration_seconds       |
+                                        +---------------------------+
+```
+
+### Data Model: `browser_events`
+
+```sql
+CREATE TABLE browser_events (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    url           TEXT NOT NULL,
+    domain        TEXT NOT NULL,
+    page_title    TEXT,
+    started_at    DATETIME NOT NULL,
+    ended_at      DATETIME,
+    duration_seconds INTEGER GENERATED ALWAYS AS
+        (CAST((julianday(ended_at) - julianday(started_at)) * 86400 AS INTEGER)) STORED
+);
+
+CREATE INDEX idx_browser_events_date ON browser_events(started_at);
+CREATE INDEX idx_browser_events_domain ON browser_events(domain);
+```
+
+### API Endpoints
+
+```
+POST   /api/browser-activity/events        # Extension POSTs active tab changes
+GET    /api/browser-activity/today          # Today's browsing summary
+GET    /api/browser-activity/range          # Browsing history for date range
+GET    /api/browser-activity/domains        # Top domains with time spent
+```
+
+### Chrome Extension Structure
+
+```
+browser-extension/
+├── manifest.json          # Manifest V3: permissions for tabs, host
+├── background.js          # Service worker: tab event listeners
+├── popup.html             # Extension popup UI
+├── popup.js               # Popup logic (tracking status, stats)
+└── icons/                 # Extension icons (16, 48, 128)
+```
+
+### Tracking Flow
+
+```
+[Tab activated or URL changed]
+    │
+    ▼
+background.js detects event
+    │
+    ├── chrome.tabs.onActivated → user switched tabs
+    │
+    └── chrome.tabs.onUpdated (status=complete) → page finished loading
+         │
+         ▼
+    Is this a trackable URL? (http/https, not chrome://)
+         │
+         ├── NO → Skip
+         │
+         └── YES
+              │
+              ├── POST previous tab event to /api/browser-activity/events
+              │   (sets ended_at = now)
+              │
+              └── Start tracking new tab (url, domain, title, started_at = now)
+```
+
+---
+
+## 13. Success Metrics
 
 Once built, the application should deliver:
 
