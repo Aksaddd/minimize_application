@@ -6,16 +6,16 @@ interface HeaderProps {
 
 export default function Header({ title, subtitle, actions }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between mb-8">
+    <header className="flex items-center justify-between mb-sp-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-          {title}
-        </h1>
+        <h1 className="text-heading-1 text-content-primary">{title}</h1>
         {subtitle && (
-          <p className="text-sm text-gray-500 mt-1">{subtitle}</p>
+          <p className="text-body-sm text-content-secondary mt-sp-1">
+            {subtitle}
+          </p>
         )}
       </div>
-      {actions && <div className="flex items-center gap-3">{actions}</div>}
+      {actions && <div className="flex items-center gap-sp-3">{actions}</div>}
     </header>
   );
 }
