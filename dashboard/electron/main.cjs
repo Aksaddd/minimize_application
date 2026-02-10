@@ -5,7 +5,7 @@ let mainWindow = null;
 let tray = null;
 
 const isDev = process.env.NODE_ENV !== "production";
-const VITE_DEV_URL = "http://localhost:5173";
+const VITE_DEV_URL = "http://localhost:5199";
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -26,7 +26,6 @@ function createWindow() {
   // Load the app
   if (isDev) {
     mainWindow.loadURL(VITE_DEV_URL);
-    mainWindow.webContents.openDevTools({ mode: "detach" });
   } else {
     mainWindow.loadFile(path.join(__dirname, "../dist/index.html"));
   }

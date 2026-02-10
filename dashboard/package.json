@@ -7,7 +7,7 @@
   "description": "Dashboard for the Minimize Application - screen time tracking, schedule management, and app categorization",
   "scripts": {
     "dev": "vite",
-    "dev:desktop": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "dev:desktop": "concurrently -k \"vite\" \"wait-on http://localhost:5199 && electron .\"",
     "build": "tsc && vite build",
     "build:desktop": "tsc && vite build && electron-builder",
     "preview": "vite preview",
