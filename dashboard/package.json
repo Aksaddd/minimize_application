@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "main": "electron/main.js",
+  "main": "electron/main.cjs",
   "description": "Dashboard for the Minimize Application - screen time tracking, schedule management, and app categorization",
   "scripts": {
     "dev": "vite",
