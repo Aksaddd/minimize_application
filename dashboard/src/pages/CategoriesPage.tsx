@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { Plus, ChevronRight, Grid3x3 } from "lucide-react";
+import { Plus, ChevronRight } from "lucide-react";
 import Header from "../components/layout/Header";
 import Card from "../components/common/Card";
 import Button from "../components/common/Button";
-import Badge from "../components/common/Badge";
 import Modal from "../components/common/Modal";
-import EmptyState from "../components/common/EmptyState";
 import { clsx } from "clsx";
 
 /* ── Mock data ──────────────────────────────────────────────────── */

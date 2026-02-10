@@ -3,8 +3,6 @@ import { Search, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import Header from "../components/layout/Header";
 import Card from "../components/common/Card";
 import SegmentControl from "../components/common/SegmentControl";
-import Badge from "../components/common/Badge";
-import { clsx } from "clsx";
 
 /* ── Mock data ──────────────────────────────────────────────────── */
 
@@ -96,7 +94,6 @@ export default function ScreenTimePage() {
 
         <div className="flex items-end gap-sp-4 h-[220px]">
           {weeklyData.map((day) => {
-            const total = day.hours.reduce((a, b) => a + b, 0);
             return (
               <div key={day.day} className="flex-1 flex flex-col items-center gap-sp-1">
                 <div className="w-full flex flex-col-reverse rounded-t overflow-hidden">
