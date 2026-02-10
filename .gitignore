@@ -1,1 +1,16 @@
 .vscode/*
+__pycache__/
+*.pyc
+
+# Backend
+data/
+*.db
+
+# Frontend
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.env
+
+# OS
+.DS_Store
+Thumbs.db
